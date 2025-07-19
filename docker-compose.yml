@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  products-postgres:
+    image: postgres:15
+    container_name: products-postgres
+    environment:
+      POSTGRES_USER: products
+      POSTGRES_PASSWORD: products
+      POSTGRES_DB: products
+    ports:
+      - "5438:5432"
+
+    volumes:
+      # persistent database
+      - pgdata:/var/lib/postgresql/data
+
+      # SQL init scripts
+      - ./db:/docker-entrypoint-initdb.d:ro
+
+      # CSVs – mount the whole folder so you can drop more files later
+      - ./data/inverteri.csv:/import/inverteri.csv:ro
+      - ./data/frizideri.csv:/import/frizideri.csv:ro
+
+volumes:
+  pgdata:
