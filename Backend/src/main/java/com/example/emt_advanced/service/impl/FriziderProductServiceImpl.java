@@ -37,6 +37,11 @@ public class FriziderProductServiceImpl implements ProductService {
     }
 
     @Override
+    public FriziderProduct findProduct(Long id) {
+        return friziderProductRepository.findById(id).get();
+    }
+
+    @Override
     public List<? extends Product> findSimilar(Long id) {
         return friziderProductRepository.findProductsWithin5000OfChosen(id);
     }

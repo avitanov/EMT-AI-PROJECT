@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GeminiService {
 
-    public List<ProductDTO> findSimilarProducts(Long chosenProductId,String category);
+    public List<Product> findSimilarProducts(Long chosenProductId,String category);
 }

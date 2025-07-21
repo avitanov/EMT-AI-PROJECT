@@ -30,7 +30,7 @@ public class GeminiServiceImpl implements GeminiService {
     }
 
     @Override
-    public List<ProductDTO> findSimilarProducts(Long chosenProductId, String category) {
+    public List<Product> findSimilarProducts(Long chosenProductId, String category) {
         var service = "frizideri".equals(category)
                 ? friziderProductService
                 : inverterProductService;
@@ -51,7 +51,7 @@ public class GeminiServiceImpl implements GeminiService {
         sb.append("\nFrom the available products, identify ONLY the products that are similar in characteristics to the chosen product. Return only a list of product ids except the id of the chosen product, e.g. [1,2,3]. If no similar products are found, return an empty list [].\n");
         String prompt = sb.toString();
 
-        List<ProductDTO> results = new ArrayList<>();
+        List<Product> results = new ArrayList<>();
         try {
             Content content = Content.fromParts(Part.fromText(prompt));
             GenerateContentConfig config = GenerateContentConfig.builder()
@@ -80,7 +80,7 @@ public class GeminiServiceImpl implements GeminiService {
             ids.remove(chosenProductId);
             for (Long id : ids) {
                 try {
-                    results.add(service.findById(id));
+                    results.add(service.findProduct(id));
                 } catch (Exception e) {
                     System.err.println("Skipping missing product id=" + id + ": " + e.getMessage());
                 }

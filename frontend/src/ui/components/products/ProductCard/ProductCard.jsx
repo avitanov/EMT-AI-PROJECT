@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+// src/components/products/ProductCard/ProductCard.jsx
+import React from 'react'; // No need for useState, useParams, useNavigate here if they're not directly used for state/params in this component
 import { useNavigate, useParams } from 'react-router-dom';
 import InfoIcon from '@mui/icons-material/Info';
 import {
-    Box,
+    Box, // Not used, can be removed
     Button,
     Card,
     CardActions,
@@ -13,8 +14,16 @@ import {
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
-    const { category } = useParams();
-    const { id, website, productName, priceMkd, imageUrl } = product;
+    const { category } = useParams(); // category is needed for the navigate path
+
+    // Destructure product properties.
+    // Use default values or fallback to prevent errors if properties are missing.
+    // Assuming 'price' might be the actual property name if 'priceMkd' is missing for similar products.
+    // If 'priceMkd' is always the correct name, then the issue is truly undefined data.
+    const { id, website, productName, imageUrl } = product;
+    // Safely access priceMkd, assuming it might be 'price' for consistency
+    // If 'priceMkd' is the actual field name, use `product.priceMkd` directly.
+    const priceValue = product.priceMkd || product.price; // Try priceMkd, then fallback to price
 
     return (
         <Card sx={{ boxShadow: 3, borderRadius: 2, p: 1, maxWidth: 345 }}>
@@ -38,13 +47,14 @@ const ProductCard = ({ product }) => {
                     {productName}
                 </Typography>
 
-                {/* Price in MKD */}
+                {/* Price in MKD - Safely display price */}
                 <Typography
                     variant="body1"
                     fontWeight="bold"
                     sx={{ textAlign: "right", fontSize: "1.25rem", mt: 1 }}
                 >
-                    {priceMkd.toLocaleString('en-US')} ден
+                    {/* Check if priceValue exists and is a number before calling toLocaleString */}
+                    {typeof priceValue === 'number' ? priceValue.toLocaleString('en-US') : 'N/A'} ден
                 </Typography>
             </CardContent>
 
@@ -55,7 +65,7 @@ const ProductCard = ({ product }) => {
                     startIcon={<InfoIcon />}
                     onClick={() => navigate(`/products/${category}/${id}`)}
                 >
-                    Info
+                    ИНФО
                 </Button>
             </CardActions>
         </Card>

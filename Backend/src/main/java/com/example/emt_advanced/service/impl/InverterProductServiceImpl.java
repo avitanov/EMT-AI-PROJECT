@@ -35,6 +35,10 @@ public class InverterProductServiceImpl implements ProductService {
 
         return ProductDTO.from(product,specs);
     }
+    @Override
+    public InverterProduct findProduct(Long id) {
+        return inverterProductRepository.findById(id).get();
+    }
 
     @Override
     public List<? extends Product> findSimilar(Long id) {

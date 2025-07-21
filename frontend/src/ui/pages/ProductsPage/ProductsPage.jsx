@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, CircularProgress,Typography,Stack,Button} from "@mui/material";
-import ProductsGrid from "../components/products/ProductsGrid/ProductsGrid.jsx";
-import useProducts from "../../hooks/useProducts.js";
+import ProductsGrid from "../../components/products/ProductsGrid/ProductsGrid.jsx";
+import useProducts from "../../../hooks/useProducts.js";
 import "./ProductsPage.css";
 import { useParams,useNavigate} from "react-router";
 

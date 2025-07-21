@@ -13,7 +13,12 @@ const productRepository = {
     findFriziderById: async (id) => {
         return await axiosInstance.get(`/products/frizideri/${id}`);
     },
-
+    findSimilarFrizider:async (id) => {
+        return await axiosInstance.get(`/products/frizideri/${id}/findSimilar`);
+    },
+    findSimilarInverter:async (id) => {
+        return await axiosInstance.get(`/products/inverteri/${id}/findSimilar`);
+    }
 };
 
 export default productRepository;

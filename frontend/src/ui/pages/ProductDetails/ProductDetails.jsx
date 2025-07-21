@@ -1,7 +1,7 @@
 // src/components/products/ProductDetails/ProductDetails.jsx
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useProductDetails from '../../../../hooks/useProductDetails.js';
+import useProductDetails from "../../../hooks/useProductDetails.js";
 import {
     Box,
     Button,
@@ -19,10 +19,12 @@ import {
     TableRow
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
+import ProductsGrid from "../../components/products/ProductsGrid/ProductsGrid.jsx";
 
 const ProductDetails = () => {
     const { category, id } = useParams();
-    const { product } = useProductDetails(id, category);
+    // Destructure new state variables
+    const { product, similarProducts, fetchSimilar, isLoadingSimilar, hasFetchedSimilar } = useProductDetails(id, category);
     const navigate = useNavigate();
 
     if (!product) {
@@ -43,7 +45,7 @@ const ProductDetails = () => {
                 onClick={() => navigate(`/products/${category}`)}
                 sx={{ mb: 2 }}
             >
-                Back to {category}
+                Назад до {category}
             </Button>
 
             <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
@@ -74,7 +76,7 @@ const ProductDetails = () => {
                             <Divider sx={{ my: 2 }} />
 
                             <Typography variant="h6" gutterBottom>
-                                Specifications
+                                Спецификации
                             </Typography>
 
                             <TableContainer>
@@ -96,19 +98,44 @@ const ProductDetails = () => {
                 </Grid>
             </Card>
 
-            {/* Similar Products Button */}
+            {/* Similar Products Button and Feedback */}
             <Box sx={{ textAlign: 'center', mt: 3 }}>
                 <Button
                     variant="contained"
                     size="large"
-                    onClick={() => {
-                        // TODO: implement similarity logic
-                        navigate(`/products/${category}`);
-                    }}
+                    onClick={fetchSimilar}
                     sx={{ px: 4, py: 2 }}
+                    disabled={isLoadingSimilar} // Disable button while loading
                 >
-                    Give me similar products depending on the characteristics
+                    {isLoadingSimilar ? <CircularProgress size={24} color="inherit" /> : "Прикажи продукти со слични карактеристики"}
                 </Button>
+            </Box>
+
+            {/* Display Similar Products or Messages */}
+            <Box sx={{ mt: 4 }}>
+                {isLoadingSimilar ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+                        <CircularProgress />
+                        <Typography variant="h6" sx={{ ml: 2 }}>
+                            Finding similar products...
+                        </Typography>
+                    </Box>
+                ) : (
+                    hasFetchedSimilar && ( // Only show if fetchSimilar has been called
+                        similarProducts.length > 0 ? (
+                            <>
+                                <Typography variant="h5" gutterBottom sx={{ textAlign: 'center', mb: 3 }}>
+                                    Слични продукти
+                                </Typography>
+                                <ProductsGrid products={similarProducts} />
+                            </>
+                        ) : (
+                            <Typography variant="h6" sx={{ textAlign: 'center', color: 'text.secondary' }}>
+                                Нема продукти со слични карактеристики 😔
+                            </Typography>
+                        )
+                    )
+                )}
             </Box>
         </Box>
     );

@@ -54,11 +54,11 @@ public class ProductController {
         return ResponseEntity.ok(inverterProductService.findById(id));
     }
     @GetMapping("/inverteri/{id}/findSimilar")
-    public List<ProductDTO> findSimilarInverteri(@PathVariable Long id) {
+    public List<Product> findSimilarInverteri(@PathVariable Long id) {
         return geminiService.findSimilarProducts(id,"inverteri");
     }
     @GetMapping("/frizideri/{id}/findSimilar")
-    public List<ProductDTO> findSimilarFrizideri(@PathVariable Long id) {
+    public List<Product> findSimilarFrizideri(@PathVariable Long id) {
         return geminiService.findSimilarProducts(id,"frizideri");
     }
 

@@ -1,9 +1,9 @@
 
 import './App.css'
 import Layout from "./ui/components/layout/Layout/Layout.jsx";
-import ProductsPage from "./ui/pages/ProductsPage.jsx";
+import ProductsPage from "./ui/pages/ProductsPage/ProductsPage.jsx";
 import {BrowserRouter, Routes, Route} from "react-router";
-import ProductDetails from "./ui/components/products/ProductDetails/ProductDetails.jsx";
+import ProductDetails from "./ui/pages/ProductDetails/ProductDetails.jsx";
 function App() {
 
   return (
