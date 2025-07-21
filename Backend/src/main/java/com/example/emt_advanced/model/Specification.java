@@ -30,6 +30,14 @@ public abstract class Specification {
         return specificationText;
     }
 
+    @Override
+    public String toString() {
+        return "Specification{" +
+                "id=" + id +
+                ", specificationText='" + specificationText + '\'' +
+                '}';
+    }
+
     public void setSpecificationText(String specificationText) {
         this.specificationText = specificationText;
     }

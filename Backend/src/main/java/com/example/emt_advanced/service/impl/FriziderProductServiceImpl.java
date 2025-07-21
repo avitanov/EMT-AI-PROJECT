@@ -35,4 +35,9 @@ public class FriziderProductServiceImpl implements ProductService {
 
         return ProductDTO.from(product,specs);
     }
+
+    @Override
+    public List<? extends Product> findSimilar(Long id) {
+        return friziderProductRepository.findProductsWithin5000OfChosen(id);
+    }
 }

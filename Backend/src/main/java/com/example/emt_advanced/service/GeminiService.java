@@ -5,8 +5,7 @@ import com.example.emt_advanced.model.dto.ProductDTO;
 
 import java.util.List;
 
-public interface ProductService {
-    List<? extends Product> findAll();
-    ProductDTO findById(Long id);
-    List<? extends Product> findSimilar(Long id);
+public interface GeminiService {
+
+    public List<ProductDTO> findSimilarProducts(Long chosenProductId,String category);
 }
